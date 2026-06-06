@@ -5,8 +5,15 @@ from __future__ import annotations
 import json
 from tempfile import TemporaryDirectory
 
-from lab_rescue_agent.core.demo_report import build_report
+from lab_rescue_agent.core.demo_report import build_report, load_scenarios
 from lab_rescue_agent.core.export_report import export_report
+
+
+EXPECTED_SCENARIO_IDS = [
+    "az204-functions-storage-error",
+    "az400-pipeline-approval-blocked",
+    "az104-vm-nsg-connectivity",
+]
 
 
 def require_contains(report, required):
@@ -15,25 +22,35 @@ def require_contains(report, required):
         raise AssertionError("Missing required content: " + ", ".join(missing))
 
 
-def test_demo_report_contains_required_agent_sections():
-    report = build_report("az204-functions-storage-error")
-    require_contains(report, [
-        "Agent 1: Lab Triage Agent",
-        "Agent 2: Recovery Planner Agent",
-        "Agent 3: Learning Path Agent",
-        "Agent 4: Study Plan Agent",
-        "Agent 5: Assessment Agent",
-        "Agent 6: Manager Insights Agent",
-        "Agent 7: Safety Verifier Agent",
-        "Status: pass",
-        "Warnings:",
-        "- none",
-        "Workflow status:",
-        "Seven-agent enterprise readiness demo completed with safety verification.",
-    ])
+def test_scenario_catalog_contains_expected_scenarios():
+    scenarios = load_scenarios()
+    scenario_ids = [scenario.get("scenario_id") for scenario in scenarios]
+
+    for expected_id in EXPECTED_SCENARIO_IDS:
+        if expected_id not in scenario_ids:
+            raise AssertionError("Missing expected scenario: " + expected_id)
 
 
-def test_demo_report_contains_enterprise_readiness_outputs():
+def test_all_scenarios_generate_seven_agent_reports():
+    for scenario_id in EXPECTED_SCENARIO_IDS:
+        report = build_report(scenario_id)
+        require_contains(report, [
+            "Agent 1: Lab Triage Agent",
+            "Agent 2: Recovery Planner Agent",
+            "Agent 3: Learning Path Agent",
+            "Agent 4: Study Plan Agent",
+            "Agent 5: Assessment Agent",
+            "Agent 6: Manager Insights Agent",
+            "Agent 7: Safety Verifier Agent",
+            "Status: pass",
+            "Warnings:",
+            "- none",
+            "Workflow status:",
+            "Seven-agent enterprise readiness demo completed with safety verification.",
+        ])
+
+
+def test_default_demo_report_contains_enterprise_readiness_outputs():
     report = build_report("az204-functions-storage-error")
     require_contains(report, [
         "Capacity-aware schedule:",
@@ -46,7 +63,31 @@ def test_demo_report_contains_enterprise_readiness_outputs():
     ])
 
 
-def test_demo_report_contains_grounded_citations():
+def test_scenario_specific_outputs_are_grounded():
+    checks = {
+        "az204-functions-storage-error": [
+            "AZ-204",
+            "AzureWebJobsStorage",
+            "azure_functions_lab_recovery.md",
+        ],
+        "az400-pipeline-approval-blocked": [
+            "AZ-400",
+            "environment approval",
+            "devops_pipeline_recovery.md",
+        ],
+        "az104-vm-nsg-connectivity": [
+            "AZ-104",
+            "NSG",
+            "azure_vm_network_recovery.md",
+        ],
+    }
+
+    for scenario_id, required in checks.items():
+        report = build_report(scenario_id)
+        require_contains(report, required)
+
+
+def test_default_demo_report_contains_grounded_citations():
     report = build_report("az204-functions-storage-error")
     require_contains(report, [
         "engineering_certification_guide.md",
@@ -57,35 +98,40 @@ def test_demo_report_contains_grounded_citations():
     ])
 
 
-def test_export_report_writes_markdown_and_json_outputs():
+def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
     with TemporaryDirectory() as temp_dir:
-        markdown_path, json_path = export_report("az204-functions-storage-error", output_dir=temp_dir)
+        for scenario_id in EXPECTED_SCENARIO_IDS:
+            markdown_path, json_path = export_report(scenario_id, output_dir=temp_dir)
 
-        if not markdown_path.exists():
-            raise AssertionError("Markdown export was not created.")
-        if not json_path.exists():
-            raise AssertionError("JSON export was not created.")
+            if not markdown_path.exists():
+                raise AssertionError("Markdown export was not created for " + scenario_id)
+            if not json_path.exists():
+                raise AssertionError("JSON export was not created for " + scenario_id)
 
-        markdown = markdown_path.read_text(encoding="utf-8")
-        summary = json.loads(json_path.read_text(encoding="utf-8"))
+            markdown = markdown_path.read_text(encoding="utf-8")
+            summary = json.loads(json_path.read_text(encoding="utf-8"))
 
-        require_contains(markdown, [
-            "Exported Lab Rescue Agent Report",
-            "Agent 7: Safety Verifier Agent",
-            "Seven-agent enterprise readiness demo completed with safety verification.",
-        ])
+            require_contains(markdown, [
+                "Exported Lab Rescue Agent Report",
+                "Agent 7: Safety Verifier Agent",
+                "Seven-agent enterprise readiness demo completed with safety verification.",
+            ])
 
-        if summary.get("safety_status") != "pass":
-            raise AssertionError("Export summary safety_status is not pass.")
-        if len(summary.get("workflow", [])) != 7:
-            raise AssertionError("Export summary does not contain seven workflow agents.")
+            if summary.get("scenario_id") != scenario_id:
+                raise AssertionError("Export summary scenario_id mismatch for " + scenario_id)
+            if summary.get("safety_status") != "pass":
+                raise AssertionError("Export summary safety_status is not pass for " + scenario_id)
+            if len(summary.get("workflow", [])) != 7:
+                raise AssertionError("Export summary does not contain seven workflow agents for " + scenario_id)
 
 
 def main():
-    test_demo_report_contains_required_agent_sections()
-    test_demo_report_contains_enterprise_readiness_outputs()
-    test_demo_report_contains_grounded_citations()
-    test_export_report_writes_markdown_and_json_outputs()
+    test_scenario_catalog_contains_expected_scenarios()
+    test_all_scenarios_generate_seven_agent_reports()
+    test_default_demo_report_contains_enterprise_readiness_outputs()
+    test_scenario_specific_outputs_are_grounded()
+    test_default_demo_report_contains_grounded_citations()
+    test_export_report_writes_markdown_and_json_outputs_for_all_scenarios()
     print("DEMO_WORKFLOW_SMOKE_OK")
 
 

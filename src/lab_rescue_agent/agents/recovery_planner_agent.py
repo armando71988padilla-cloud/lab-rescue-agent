@@ -25,32 +25,57 @@ class RecoveryPlannerAgent:
 
     def run(self, scenario: dict, triage: LabTriageResult) -> RecoveryPlanResult:
         root_cause = scenario.get("known_root_cause", "Unknown root cause")
-        summary = "Recovery plan targets the confirmed lab failure: " + str(root_cause)
+        summary = str(
+            scenario.get(
+                "recovery_summary",
+                "Recovery plan targets the confirmed lab failure: " + str(root_cause),
+            )
+        )
 
-        fix_steps = [
-            "Confirm the Function App belongs to the synthetic lab scenario.",
-            "Inspect current application settings before changing configuration.",
-            "Add or repair the AzureWebJobsStorage setting using synthetic lab storage values only.",
-            "Restart the Function App after the setting is corrected.",
-        ]
+        fix_steps = list(
+            scenario.get(
+                "fix_steps",
+                [
+                    "Confirm the lab resource belongs to the synthetic scenario.",
+                    "Inspect current configuration before applying changes.",
+                    "Apply the smallest safe correction for the confirmed root cause.",
+                    "Restart or re-run the affected lab component after correction.",
+                ],
+            )
+        )
 
-        rollback_steps = [
-            "Record the previous app setting value before applying changes.",
-            "Restore the previous value if the host still fails to start.",
-            "Restart the Function App again after rollback.",
-        ]
+        rollback_steps = list(
+            scenario.get(
+                "rollback_steps",
+                [
+                    "Record the previous configuration before applying changes.",
+                    "Restore the previous configuration if verification fails.",
+                    "Re-run verification after rollback.",
+                ],
+            )
+        )
 
-        verification_steps = [
-            "Confirm the function host starts without storage configuration errors.",
-            "Confirm the HTTP trigger endpoint responds.",
-            "Confirm deployment logs no longer mention missing AzureWebJobsStorage.",
-        ]
+        verification_steps = list(
+            scenario.get(
+                "verification_steps",
+                [
+                    "Confirm the original failure no longer appears.",
+                    "Confirm the expected lab outcome succeeds.",
+                    "Confirm logs show no new safety or configuration errors.",
+                ],
+            )
+        )
 
-        safety_notes = [
-            "Do not print real connection strings in logs.",
-            "Do not commit secrets to Git.",
-            "Use synthetic lab identifiers only in demos.",
-        ]
+        safety_notes = list(
+            scenario.get(
+                "safety_notes",
+                [
+                    "Do not print real secrets in logs.",
+                    "Do not commit credentials to Git.",
+                    "Use synthetic lab identifiers only in demos.",
+                ],
+            )
+        )
 
         return RecoveryPlanResult(
             agent_name=self.name,

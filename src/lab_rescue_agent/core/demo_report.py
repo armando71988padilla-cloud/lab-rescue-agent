@@ -18,9 +18,13 @@ def project_root():
     return Path(__file__).resolve().parents[3]
 
 
-def load_scenario(scenario_id):
+def load_scenarios():
     path = project_root() / "data" / "synthetic" / "lab_failure_scenarios.json"
-    scenarios = json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_scenario(scenario_id):
+    scenarios = load_scenarios()
     for scenario in scenarios:
         if scenario.get("scenario_id") == scenario_id:
             return scenario

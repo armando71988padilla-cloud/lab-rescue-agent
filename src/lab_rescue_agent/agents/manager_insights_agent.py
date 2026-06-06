@@ -53,13 +53,14 @@ class ManagerInsightsAgent:
         team_size = len(learners)
         low_score_count = sum(1 for learner in learners if int(learner.get("practice_score_avg", 0)) < 75)
         failed_or_review_count = sum(
-            1 for learner in learners
+            1
+            for learner in learners
             if str(learner.get("recent_lab_outcome", "")).lower() in {"fail", "review"}
         )
 
         summary = (
-            f"{team_id} shows elevated readiness risk around {scenario.get('certification', 'the target certification')} "
-            f"because the current failed lab maps to core skill areas: {', '.join(triage.skill_areas)}."
+            f"{team_id} shows readiness risk around {scenario.get('certification', 'the target certification')} "
+            f"because this failed lab maps to: {', '.join(triage.skill_areas)}."
         )
 
         readiness_signals = [
@@ -70,16 +71,21 @@ class ManagerInsightsAgent:
             f"Assessment target: {assessment.readiness_target}",
         ]
 
-        risk_areas = [
-            "Azure Functions configuration recovery",
-            "Application setting verification before code changes",
-            "Rollback discipline after failed recovery attempts",
-            "Grounded explanation of root cause and verification evidence",
-        ]
+        risk_areas = list(
+            scenario.get(
+                "manager_risk_areas",
+                [
+                    "Root cause explanation",
+                    "Rollback discipline",
+                    "Verification discipline",
+                    "Safety-aware recovery practice",
+                ],
+            )
+        )
 
         recommended_manager_actions = [
             "Protect short focus blocks for learners with high meeting load.",
-            "Assign a targeted Azure Functions recovery practice session.",
+            f"Assign a targeted recovery practice session for {scenario.get('certification', 'the target certification')}.",
             "Review whether learners can explain root cause, fix, rollback, and verification steps.",
             "Use aggregate readiness signals only; do not expose private learner details in manager summaries.",
         ]

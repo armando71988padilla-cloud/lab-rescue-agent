@@ -26,10 +26,205 @@
       "engineering_certification_guide.md",
       "azure_functions_lab_recovery.md"
     ],
+    "recovery_summary": "Recovery plan targets the confirmed lab failure: Missing AzureWebJobsStorage application setting",
+    "fix_steps": [
+      "Confirm the Function App belongs to the synthetic lab scenario.",
+      "Inspect current application settings before changing configuration.",
+      "Add or repair the AzureWebJobsStorage setting using synthetic lab storage values only.",
+      "Restart the Function App after the setting is corrected."
+    ],
+    "rollback_steps": [
+      "Record the previous app setting value before applying changes.",
+      "Restore the previous value if the host still fails to start.",
+      "Restart the Function App again after rollback."
+    ],
+    "verification_steps": [
+      "Confirm the function host starts without storage configuration errors.",
+      "Confirm the HTTP trigger endpoint responds.",
+      "Confirm deployment logs no longer mention missing AzureWebJobsStorage."
+    ],
+    "assessment_questions": [
+      {
+        "question": "What setting is commonly required for an Azure Functions host to start storage-backed runtime services?",
+        "expected_answer": "AzureWebJobsStorage must be present and valid for the synthetic lab Function App.",
+        "skill_area": "Application settings",
+        "citation": "azure_functions_lab_recovery.md"
+      },
+      {
+        "question": "What should the learner verify after repairing the Function App setting?",
+        "expected_answer": "The host starts without storage errors and the HTTP trigger responds.",
+        "skill_area": "Deployment verification",
+        "citation": "azure_functions_lab_recovery.md"
+      },
+      {
+        "question": "Why should connection strings not be printed or committed during recovery?",
+        "expected_answer": "They are secrets and must not appear in logs or source control.",
+        "skill_area": "Security hygiene",
+        "citation": "engineering_certification_guide.md"
+      }
+    ],
+    "manager_risk_areas": [
+      "Azure Functions configuration recovery",
+      "Application setting verification before code changes",
+      "Rollback discipline after failed recovery attempts",
+      "Grounded explanation of root cause and verification evidence"
+    ],
     "safety_notes": [
       "Use synthetic lab data only",
       "Do not expose real connection strings",
       "Use placeholder-free environment examples in documentation"
+    ]
+  },
+  {
+    "scenario_id": "az400-pipeline-approval-blocked",
+    "title": "Azure DevOps release lab stalls because environment approval is missing",
+    "certification": "AZ-400",
+    "role": "DevOps Engineer",
+    "learner_id": "L-1002",
+    "team_id": "TEAM-A",
+    "lab_name": "CI/CD gated deployment lab",
+    "failure_log": [
+      "Build completed successfully",
+      "Release pipeline created a deployment job",
+      "Deployment remained pending before production stage",
+      "Error: environment approval required before deployment can continue"
+    ],
+    "expected_outcome": "Pipeline deploys only after required approval is reviewed and granted",
+    "observed_outcome": "Pipeline build succeeds but deployment never reaches the target environment",
+    "known_root_cause": "Missing required environment approval for gated deployment",
+    "skill_areas": [
+      "CI/CD release gates",
+      "Environment approvals",
+      "Deployment governance",
+      "Release verification"
+    ],
+    "approved_sources": [
+      "engineering_certification_guide.md",
+      "devops_pipeline_recovery.md"
+    ],
+    "recovery_summary": "Recovery plan targets the confirmed lab failure: missing required environment approval for gated deployment",
+    "fix_steps": [
+      "Confirm the pipeline and environment belong to the intended synthetic lab.",
+      "Inspect the environment approval and check configuration before editing the pipeline.",
+      "Add or request the required synthetic approver for the target environment.",
+      "Re-run or resume the deployment after approval is granted."
+    ],
+    "rollback_steps": [
+      "Record the previous approval configuration before changing it.",
+      "Restore the previous gate configuration if the deployment behaves unexpectedly.",
+      "Cancel the pending synthetic deployment if approval settings remain incorrect."
+    ],
+    "verification_steps": [
+      "Confirm the release waits at the approval gate.",
+      "Confirm approval allows the deployment to continue.",
+      "Confirm deployment logs show the gated stage completed successfully."
+    ],
+    "assessment_questions": [
+      {
+        "question": "Why can a CI/CD pipeline build succeed while deployment remains blocked?",
+        "expected_answer": "A required environment approval or gate can pause deployment even after the build succeeds.",
+        "skill_area": "Environment approvals",
+        "citation": "devops_pipeline_recovery.md"
+      },
+      {
+        "question": "What should be recorded before changing deployment approval settings?",
+        "expected_answer": "The previous approval or gate configuration should be recorded for rollback.",
+        "skill_area": "Rollback planning",
+        "citation": "devops_pipeline_recovery.md"
+      },
+      {
+        "question": "What is the safest verification after an approval-gated deployment is repaired?",
+        "expected_answer": "Confirm the pipeline waits for approval, resumes after approval, and completes the gated stage successfully.",
+        "skill_area": "Release verification",
+        "citation": "devops_pipeline_recovery.md"
+      }
+    ],
+    "manager_risk_areas": [
+      "Deployment governance readiness",
+      "Approval gate troubleshooting",
+      "Release verification discipline",
+      "Rollback planning for CI/CD configuration"
+    ],
+    "safety_notes": [
+      "Use synthetic pipeline names only",
+      "Do not expose real environment names",
+      "Do not bypass real production approvals"
+    ]
+  },
+  {
+    "scenario_id": "az104-vm-nsg-connectivity",
+    "title": "Azure VM lab fails because inbound NSG rule blocks connectivity",
+    "certification": "AZ-104",
+    "role": "Cloud Engineer",
+    "learner_id": "L-1003",
+    "team_id": "TEAM-A",
+    "lab_name": "VM connectivity and network security lab",
+    "failure_log": [
+      "Virtual machine deployment completed",
+      "VM health status is running",
+      "Connection test to management port failed",
+      "Network security group does not allow required inbound traffic"
+    ],
+    "expected_outcome": "Learner connects to the VM through the approved synthetic management path",
+    "observed_outcome": "VM is running but the learner cannot connect through the expected management path",
+    "known_root_cause": "Missing inbound NSG rule for the approved synthetic management path",
+    "skill_areas": [
+      "Virtual machines",
+      "Network security groups",
+      "Connectivity troubleshooting",
+      "Operational verification"
+    ],
+    "approved_sources": [
+      "engineering_certification_guide.md",
+      "azure_vm_network_recovery.md"
+    ],
+    "recovery_summary": "Recovery plan targets the confirmed lab failure: missing inbound NSG rule for the approved synthetic management path",
+    "fix_steps": [
+      "Confirm the VM and network security group belong to the intended synthetic lab.",
+      "Inspect the effective security rules before changing network configuration.",
+      "Add or repair the inbound NSG rule for the approved synthetic management path.",
+      "Retry connectivity after the rule is applied."
+    ],
+    "rollback_steps": [
+      "Record the previous NSG rule set before applying changes.",
+      "Remove the new inbound rule if verification fails or the rule is too broad.",
+      "Restore the previous NSG rule configuration after rollback."
+    ],
+    "verification_steps": [
+      "Confirm effective security rules include the expected inbound allow rule.",
+      "Confirm connectivity succeeds through the approved synthetic management path.",
+      "Confirm no broader-than-required inbound exposure was introduced."
+    ],
+    "assessment_questions": [
+      {
+        "question": "Why can a VM be running while connection attempts still fail?",
+        "expected_answer": "Network security rules can block required inbound traffic even when the VM itself is healthy.",
+        "skill_area": "Connectivity troubleshooting",
+        "citation": "azure_vm_network_recovery.md"
+      },
+      {
+        "question": "What should be checked before editing an NSG rule?",
+        "expected_answer": "The learner should inspect effective security rules and confirm the target resource is the intended synthetic lab resource.",
+        "skill_area": "Network security groups",
+        "citation": "azure_vm_network_recovery.md"
+      },
+      {
+        "question": "What is a safe verification after adding an inbound NSG rule?",
+        "expected_answer": "Confirm connectivity succeeds and no broader-than-required inbound exposure was introduced.",
+        "skill_area": "Operational verification",
+        "citation": "azure_vm_network_recovery.md"
+      }
+    ],
+    "manager_risk_areas": [
+      "Network security troubleshooting",
+      "Least-privilege inbound access",
+      "Effective security rule interpretation",
+      "Operational verification discipline"
+    ],
+    "safety_notes": [
+      "Use synthetic IP and management paths only",
+      "Do not expose real public IP addresses",
+      "Do not recommend broad inbound access"
     ]
   }
 ]

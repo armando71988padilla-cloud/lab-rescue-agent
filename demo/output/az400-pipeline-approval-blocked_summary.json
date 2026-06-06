@@ -1,0 +1,20 @@
+{
+  "project": "Lab Rescue Agent",
+  "scenario_id": "az400-pipeline-approval-blocked",
+  "certification": "AZ-400",
+  "role": "DevOps Engineer",
+  "team_id": "TEAM-A",
+  "learner_id": "L-1002",
+  "workflow": [
+    "Lab Triage Agent",
+    "Recovery Planner Agent",
+    "Learning Path Agent",
+    "Study Plan Agent",
+    "Assessment Agent",
+    "Manager Insights Agent",
+    "Safety Verifier Agent"
+  ],
+  "safety_status": "pass",
+  "data_policy": "Synthetic demo data only. No real employee data, customer data, secrets, or private logs.",
+  "expected_smoke_test": "DEMO_WORKFLOW_SMOKE_OK"
+}

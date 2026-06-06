@@ -46,9 +46,9 @@ Verification steps:
 - Confirm deployment logs no longer mention missing AzureWebJobsStorage.
 
 Safety notes:
-- Do not print real connection strings in logs.
-- Do not commit secrets to Git.
-- Use synthetic lab identifiers only in demos.
+- Use synthetic lab data only
+- Do not expose real connection strings
+- Use placeholder-free environment examples in documentation
 
 Recovery citations:
 - engineering_certification_guide.md
@@ -103,7 +103,7 @@ Study plan citations:
 
 Agent 5: Assessment Agent
 - Readiness target: AZ-204 grounded practice readiness
-- Scoring guidance: Pass when the learner explains root cause, fix, rollback, verification, and secret safety.
+- Scoring guidance: Pass when the learner explains root cause, fix, rollback, verification, and safety constraints.
 
 Grounded practice questions:
 - Q1: What setting is commonly required for an Azure Functions host to start storage-backed runtime services?
@@ -125,7 +125,7 @@ Assessment citations:
 
 Agent 6: Manager Insights Agent
 - Team ID: TEAM-A
-- Summary: TEAM-A shows elevated readiness risk around AZ-204 because the current failed lab maps to core skill areas: Azure Functions, Application settings, Storage account configuration, Deployment verification.
+- Summary: TEAM-A shows readiness risk around AZ-204 because this failed lab maps to: Azure Functions, Application settings, Storage account configuration, Deployment verification.
 
 Readiness signals:
 - Synthetic team size reviewed: 3
@@ -142,7 +142,7 @@ Risk areas:
 
 Recommended manager actions:
 - Protect short focus blocks for learners with high meeting load.
-- Assign a targeted Azure Functions recovery practice session.
+- Assign a targeted recovery practice session for AZ-204.
 - Review whether learners can explain root cause, fix, rollback, and verification steps.
 - Use aggregate readiness signals only; do not expose private learner details in manager summaries.
 

@@ -29,35 +29,48 @@ class AssessmentAgent:
 
     name = "Assessment Agent"
 
-    def run(self, scenario: dict, learning: LearningPathResult):
+    def run(self, scenario: dict, learning: LearningPathResult) -> AssessmentResult:
         certification = str(scenario.get("certification", "Unknown certification"))
         citations = list(learning.citations)
 
-        questions = [
-            AssessmentQuestion(
-                question="What setting is commonly required for an Azure Functions host to start storage-backed runtime services?",
-                expected_answer="AzureWebJobsStorage must be present and valid for the synthetic lab Function App.",
-                skill_area="Application settings",
-                citation="azure_functions_lab_recovery.md",
-            ),
-            AssessmentQuestion(
-                question="What should the learner verify after repairing the Function App setting?",
-                expected_answer="The host starts without storage errors and the HTTP trigger responds.",
-                skill_area="Deployment verification",
-                citation="azure_functions_lab_recovery.md",
-            ),
-            AssessmentQuestion(
-                question="Why should connection strings not be printed or committed during recovery?",
-                expected_answer="They are secrets and must not appear in logs or source control.",
-                skill_area="Security hygiene",
-                citation="engineering_certification_guide.md",
-            ),
-        ]
+        configured_questions = list(scenario.get("assessment_questions", []))
+        questions = []
+        for item in configured_questions:
+            questions.append(
+                AssessmentQuestion(
+                    question=str(item.get("question", "")),
+                    expected_answer=str(item.get("expected_answer", "")),
+                    skill_area=str(item.get("skill_area", "General readiness")),
+                    citation=str(item.get("citation", "")),
+                )
+            )
+
+        if not questions:
+            questions = [
+                AssessmentQuestion(
+                    question="What was the confirmed root cause of the failed lab?",
+                    expected_answer=str(scenario.get("known_root_cause", "Unknown root cause")),
+                    skill_area="Root cause analysis",
+                    citation=citations[0] if citations else "",
+                ),
+                AssessmentQuestion(
+                    question="What should be verified after applying the recovery plan?",
+                    expected_answer="The expected lab outcome should succeed and the original error should no longer appear.",
+                    skill_area="Verification",
+                    citation=citations[0] if citations else "",
+                ),
+                AssessmentQuestion(
+                    question="Why should recovery steps avoid exposing secrets or private data?",
+                    expected_answer="Recovery guidance must preserve safe handling of credentials, logs, and synthetic-only demo data.",
+                    skill_area="Security hygiene",
+                    citation="engineering_certification_guide.md",
+                ),
+            ]
 
         return AssessmentResult(
             agent_name=self.name,
             readiness_target=certification + " grounded practice readiness",
             questions=questions,
-            scoring_guidance="Pass when the learner explains root cause, fix, rollback, verification, and secret safety.",
+            scoring_guidance="Pass when the learner explains root cause, fix, rollback, verification, and safety constraints.",
             citations=citations,
         )
