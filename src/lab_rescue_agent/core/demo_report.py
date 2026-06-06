@@ -9,6 +9,7 @@ from lab_rescue_agent.agents.assessment_agent import AssessmentAgent
 from lab_rescue_agent.agents.lab_triage_agent import LabTriageAgent
 from lab_rescue_agent.agents.learning_path_agent import LearningPathAgent
 from lab_rescue_agent.agents.recovery_planner_agent import RecoveryPlannerAgent
+from lab_rescue_agent.agents.safety_verifier_agent import SafetyVerifierAgent
 
 
 def project_root():
@@ -47,6 +48,7 @@ def build_report(scenario_id):
     recovery = RecoveryPlannerAgent().run(scenario, triage)
     learning = LearningPathAgent().run(scenario, triage, recovery)
     assessment = AssessmentAgent().run(scenario, learning)
+    safety = SafetyVerifierAgent().run(scenario, triage, recovery, learning, assessment)
     lines = []
     lines.append("Lab Rescue Agent Demo Report")
     lines.append("=" * 29)
@@ -93,6 +95,15 @@ def build_report(scenario_id):
     for name, text in sources.items():
         lines.append(f"- {name}: {len(text)} characters")
     lines.append("")
-    lines.append("Next agent actions:")
-    lines.append("- Safety Verifier Agent checks for secrets, PII, and unsafe claims")
+    lines.append("Agent 5: Safety Verifier Agent")
+    lines.append(f"- Status: {safety.status}")
+    lines.append("")
+    append_list(lines, "Checks passed:", safety.checks_passed)
+    if safety.warnings:
+        append_list(lines, "Warnings:", safety.warnings)
+    else:
+        append_list(lines, "Warnings:", ["none"])
+    append_list(lines, "Safety citations:", safety.citations)
+    lines.append("Workflow status:")
+    lines.append("- Multi-agent demo completed with safety verification.")
     return "\n".join(lines)
