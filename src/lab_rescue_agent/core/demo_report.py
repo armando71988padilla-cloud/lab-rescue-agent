@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from lab_rescue_agent.agents.lab_triage_agent import LabTriageAgent
+from lab_rescue_agent.agents.recovery_planner_agent import RecoveryPlannerAgent
 
 
 def project_root():
@@ -30,10 +31,18 @@ def load_sources(source_names):
     return source_map
 
 
+def append_list(lines, title, items):
+    lines.append(title)
+    for item in items:
+        lines.append(f"- {item}")
+    lines.append("")
+
+
 def build_report(scenario_id):
     scenario = load_scenario(scenario_id)
     sources = load_sources(scenario["approved_sources"])
     triage = LabTriageAgent().run(scenario)
+    recovery = RecoveryPlannerAgent().run(scenario, triage)
     lines = []
     lines.append("Lab Rescue Agent Demo Report")
     lines.append("=" * 29)
@@ -45,24 +54,22 @@ def build_report(scenario_id):
     lines.append(f"- Confidence: {triage.confidence}")
     lines.append(f"- Diagnosis: {triage.diagnosis}")
     lines.append("")
-    lines.append("Evidence reviewed:")
-    for item in triage.evidence:
-        lines.append(f"- {item}")
+    append_list(lines, "Evidence reviewed:", triage.evidence)
+    append_list(lines, "Mapped skill areas:", triage.skill_areas)
+    append_list(lines, "Citations:", triage.citations)
+    lines.append("Agent 2: Recovery Planner Agent")
+    lines.append(f"- Summary: {recovery.summary}")
     lines.append("")
-    lines.append("Mapped skill areas:")
-    for skill in triage.skill_areas:
-        lines.append(f"- {skill}")
-    lines.append("")
-    lines.append("Citations:")
-    for citation in triage.citations:
-        lines.append(f"- {citation}")
-    lines.append("")
+    append_list(lines, "Fix steps:", recovery.fix_steps)
+    append_list(lines, "Rollback steps:", recovery.rollback_steps)
+    append_list(lines, "Verification steps:", recovery.verification_steps)
+    append_list(lines, "Safety notes:", recovery.safety_notes)
+    append_list(lines, "Recovery citations:", recovery.citations)
     lines.append("Grounded sources loaded:")
     for name, text in sources.items():
         lines.append(f"- {name}: {len(text)} characters")
     lines.append("")
     lines.append("Next agent actions:")
-    lines.append("- Recovery Planner Agent creates fix, rollback, and verification steps")
     lines.append("- Learning Path Agent maps the issue to certification skills")
     lines.append("- Assessment Agent generates grounded practice questions")
     lines.append("- Safety Verifier Agent checks for secrets, PII, and unsafe claims")
