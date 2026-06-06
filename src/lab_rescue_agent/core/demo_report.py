@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from lab_rescue_agent.agents.assessment_agent import AssessmentAgent
 from lab_rescue_agent.agents.lab_triage_agent import LabTriageAgent
 from lab_rescue_agent.agents.learning_path_agent import LearningPathAgent
 from lab_rescue_agent.agents.recovery_planner_agent import RecoveryPlannerAgent
@@ -45,6 +46,7 @@ def build_report(scenario_id):
     triage = LabTriageAgent().run(scenario)
     recovery = RecoveryPlannerAgent().run(scenario, triage)
     learning = LearningPathAgent().run(scenario, triage, recovery)
+    assessment = AssessmentAgent().run(scenario, learning)
     lines = []
     lines.append("Lab Rescue Agent Demo Report")
     lines.append("=" * 29)
@@ -75,11 +77,22 @@ def build_report(scenario_id):
     append_list(lines, "Study focus:", learning.study_focus)
     append_list(lines, "Recommended learner actions:", learning.recommended_actions)
     append_list(lines, "Learning citations:", learning.citations)
+    lines.append("Agent 4: Assessment Agent")
+    lines.append(f"- Readiness target: {assessment.readiness_target}")
+    lines.append(f"- Scoring guidance: {assessment.scoring_guidance}")
+    lines.append("")
+    lines.append("Grounded practice questions:")
+    for index, question in enumerate(assessment.questions, start=1):
+        lines.append(f"- Q{index}: {question.question}")
+        lines.append(f"  Expected: {question.expected_answer}")
+        lines.append(f"  Skill: {question.skill_area}")
+        lines.append(f"  Citation: {question.citation}")
+    lines.append("")
+    append_list(lines, "Assessment citations:", assessment.citations)
     lines.append("Grounded sources loaded:")
     for name, text in sources.items():
         lines.append(f"- {name}: {len(text)} characters")
     lines.append("")
     lines.append("Next agent actions:")
-    lines.append("- Assessment Agent generates grounded practice questions")
     lines.append("- Safety Verifier Agent checks for secrets, PII, and unsafe claims")
     return "\n".join(lines)
