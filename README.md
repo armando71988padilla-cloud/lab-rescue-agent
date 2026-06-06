@@ -11,7 +11,7 @@ From failed lab to certification readiness in one safe, explainable multi-agent 
 ## Current demo status
 
 - Local deterministic Python demo works
-- Five specialized agents are wired into one workflow
+- Seven specialized agents are wired into one enterprise readiness workflow
 - Synthetic data only
 - Grounded synthetic knowledge docs are cited in outputs
 - Stdlib smoke test passes without extra test dependencies
@@ -21,8 +21,10 @@ From failed lab to certification readiness in one safe, explainable multi-agent 
 1. Lab Triage Agent diagnoses the failed lab pattern.
 2. Recovery Planner Agent creates fix, rollback, and verification steps.
 3. Learning Path Agent maps the failure to certification readiness.
-4. Assessment Agent generates grounded practice questions.
-5. Safety Verifier Agent checks citations, rollback, verification, synthetic data posture, and secret hygiene.
+4. Study Plan Agent creates a capacity-aware recovery schedule.
+5. Assessment Agent generates grounded practice questions.
+6. Manager Insights Agent summarizes aggregate team readiness signals.
+7. Safety Verifier Agent checks citations, rollback, verification, synthetic data posture, and secret hygiene.
 
 ## Demo scenario
 
@@ -80,7 +82,7 @@ No real employee data, customer data, connection strings, secrets, or private lo
 
 - src/lab_rescue_agent/agents: specialized agent modules
 - src/lab_rescue_agent/core: deterministic report orchestration
-- data/synthetic: synthetic lab failure scenarios
+- data/synthetic: synthetic lab failure scenarios and team learning signals
 - knowledge: approved synthetic grounding documents
 - demo: sample demo prompts and commands
 - tests: no-dependency smoke tests

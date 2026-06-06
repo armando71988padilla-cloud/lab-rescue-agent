@@ -10,13 +10,15 @@ This project turns a failed lab into a structured recovery and readiness workflo
 
 The demo uses a synthetic AZ-204 Azure Functions lab failure. The learner deploys an HTTP trigger, but the Function App host cannot start because AzureWebJobsStorage is missing or empty.
 
-The workflow runs through five agents:
+The upgraded workflow runs through seven agents:
 
 1. Lab Triage Agent diagnoses the failure pattern.
 2. Recovery Planner Agent creates fix, rollback, and verification steps.
 3. Learning Path Agent maps the issue to certification readiness.
-4. Assessment Agent creates grounded practice questions.
-5. Safety Verifier Agent checks citations, rollback, verification, synthetic data posture, and secret hygiene.
+4. Study Plan Agent creates a capacity-aware recovery schedule.
+5. Assessment Agent creates grounded practice questions.
+6. Manager Insights Agent summarizes aggregate team readiness signals.
+7. Safety Verifier Agent checks citations, rollback, verification, synthetic data posture, privacy notes, and secret hygiene.
 
 The demo is deterministic and local-first, so judges can run it with one command:
 
@@ -38,7 +40,7 @@ DEMO_WORKFLOW_SMOKE_OK
 
 The current Microsoft integration path is documented and scaffolded with a no-dependency Foundry config adapter, so the local demo stays reliable while the project remains ready for Microsoft Foundry or Agent Framework integration.
 
-The final output shows a passing safety verifier, grounded citations, rollback steps, verification steps, and synthetic-only data handling.
+The final output shows a passing safety verifier, grounded citations, rollback steps, verification steps, capacity-aware study planning, manager readiness insights, privacy notes, and synthetic-only data handling.
 
 ## Screen recording checklist
 
@@ -47,7 +49,7 @@ The final output shows a passing safety verifier, grounded citations, rollback s
 3. Show docs/submission_notes.md.
 4. Run the smoke test.
 5. Run the demo command.
-6. Scroll to Agent 5 and show Status: pass and Warnings: none.
+6. Scroll to Agent 7 and show Status: pass and Warnings: none.
 7. Close by showing the public GitHub repo URL.
 
 ## Exact commands to show

@@ -12,7 +12,7 @@ Hands-on labs are where technical learners often get stuck. A normal study plann
 
 | Requirement | How Lab Rescue Agent addresses it |
 |---|---|
-| Multi-agent system | Uses five specialized agents in a sequential reasoning workflow |
+| Multi-agent system | Uses seven specialized agents in a sequential enterprise readiness workflow |
 | Enterprise learning scenario | Focuses on certification lab recovery and readiness for technical teams |
 | Microsoft IQ layer | Uses Foundry IQ-style grounding over approved synthetic lab and certification docs |
 | Synthetic data | Uses synthetic learner IDs, synthetic team IDs, synthetic lab logs, and synthetic knowledge docs only |
@@ -24,15 +24,17 @@ Hands-on labs are where technical learners often get stuck. A normal study plann
 1. Lab Triage Agent: diagnoses the failed lab pattern.
 2. Recovery Planner Agent: creates fix, rollback, and verification steps.
 3. Learning Path Agent: maps the failure to certification readiness.
-4. Assessment Agent: generates grounded practice questions with citations.
-5. Safety Verifier Agent: checks citations, rollback, verification, synthetic data posture, and secret hygiene.
+4. Study Plan Agent: creates a capacity-aware study schedule and milestones.
+5. Assessment Agent: generates grounded practice questions with citations.
+6. Manager Insights Agent: summarizes aggregate team readiness and manager actions.
+7. Safety Verifier Agent: checks citations, rollback, verification, synthetic data posture, privacy notes, and secret hygiene.
 
 ## Judging rubric alignment
 
 | Rubric area | Evidence in project |
 |---|---|
 | Accuracy and relevance | Diagnosis is tied to synthetic failure evidence and approved knowledge docs |
-| Reasoning and multi-step thinking | Output flows from triage to recovery to learning to assessment to safety verification |
+| Reasoning and multi-step thinking | Output flows from triage to recovery to learning to study planning to assessment to manager insights to safety verification |
 | Reliability and safety | Smoke test, deterministic fallback, rollback checks, verification checks, citation checks, and secret hygiene scan |
 | Creativity | Combines debugging recovery with certification readiness instead of building a generic study planner |
 | User experience | One-command local demo and simple README/docs path |

@@ -31,12 +31,14 @@ Failure evidence:
 1. Lab Triage Agent diagnoses the failure pattern.
 2. Recovery Planner Agent creates fix, rollback, and verification steps.
 3. Learning Path Agent maps the failure to certification readiness.
-4. Assessment Agent generates grounded practice questions.
-5. Safety Verifier Agent checks citations, rollback, verification, synthetic data posture, and secret hygiene.
+4. Study Plan Agent creates a capacity-aware recovery schedule.
+5. Assessment Agent generates grounded practice questions.
+6. Manager Insights Agent summarizes aggregate team readiness signals.
+7. Safety Verifier Agent checks citations, rollback, verification, synthetic data posture, privacy notes, and secret hygiene.
 
 ## Expected final status
 
-Safety Verifier Agent should report:
+Safety Verifier Agent should report after the seven-agent workflow:
 
 ```text
 Status: pass
