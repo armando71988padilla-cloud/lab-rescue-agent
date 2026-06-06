@@ -66,11 +66,12 @@ def evaluate_scenario(scenario: dict) -> list[EvaluationResult]:
         markdown_path, json_path = export_report(scenario_id, output_dir=temp_dir)
         html_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_dashboard.html"))
         trace_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_trace.json"))
+        manager_brief_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_manager_brief.md"))
         results.append(
             EvaluationResult(
                 f"{scenario_id}: export artifacts",
-                markdown_path.exists() and json_path.exists() and html_path.exists() and trace_path.exists(),
-                "Markdown, JSON, HTML dashboard, and agent trace exports must be created.",
+                markdown_path.exists() and json_path.exists() and html_path.exists() and trace_path.exists() and manager_brief_path.exists(),
+                "Markdown, JSON, HTML dashboard, agent trace, and manager brief exports must be created.",
             )
         )
         results.append(
@@ -78,6 +79,13 @@ def evaluate_scenario(scenario: dict) -> list[EvaluationResult]:
                 f"{scenario_id}: agent trace ledger",
                 trace_path.exists() and "agent_reasoning_ledger" in trace_path.read_text(encoding="utf-8"),
                 "Agent trace ledger must identify the seven-agent reasoning flow.",
+            )
+        )
+        results.append(
+            EvaluationResult(
+                f"{scenario_id}: manager executive brief",
+                manager_brief_path.exists() and "Recommended manager actions" in manager_brief_path.read_text(encoding="utf-8"),
+                "Manager executive brief must provide actionable aggregate readiness guidance.",
             )
         )
 

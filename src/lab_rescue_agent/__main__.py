@@ -36,12 +36,13 @@ def main(argv: list[str] | None = None) -> int:
     if command == "export":
         scenario_id = args[1] if len(args) > 1 else DEFAULT_SCENARIO_ID
         markdown_path, json_path = export_report(scenario_id)
-        _, _, html_path, trace_path = output_paths_for(scenario_id)
+        _, _, html_path, trace_path, manager_brief_path = output_paths_for(scenario_id)
         print("Export complete")
         print(f"Markdown report: {markdown_path}")
         print(f"JSON summary: {json_path}")
         print(f"HTML dashboard: {html_path}")
         print(f"Agent trace: {trace_path}")
+        print(f"Manager brief: {manager_brief_path}")
         return 0
 
     if command == "evaluate":

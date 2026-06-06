@@ -106,6 +106,7 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
             markdown_path, json_path = export_report(scenario_id, output_dir=temp_dir)
             html_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_dashboard.html"))
             trace_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_trace.json"))
+            manager_brief_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_manager_brief.md"))
 
             if not markdown_path.exists():
                 raise AssertionError("Markdown export was not created for " + scenario_id)
@@ -115,9 +116,12 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
                 raise AssertionError("HTML dashboard export was not created for " + scenario_id)
             if not trace_path.exists():
                 raise AssertionError("Agent trace export was not created for " + scenario_id)
+            if not manager_brief_path.exists():
+                raise AssertionError("Manager brief export was not created for " + scenario_id)
 
             markdown = markdown_path.read_text(encoding="utf-8")
             dashboard = html_path.read_text(encoding="utf-8")
+            manager_brief = manager_brief_path.read_text(encoding="utf-8")
             trace = json.loads(trace_path.read_text(encoding="utf-8"))
             summary = json.loads(json_path.read_text(encoding="utf-8"))
 
@@ -130,6 +134,13 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
                 "Lab Rescue Agent Dashboard",
                 "Seven-agent certification lab recovery dashboard",
                 "Foundry Readiness",
+                scenario_id,
+            ])
+            require_contains(manager_brief, [
+                "Lab Rescue Agent Manager Executive Brief",
+                "Executive summary",
+                "Recommended manager actions",
+                "Privacy and safety notes",
                 scenario_id,
             ])
 
@@ -160,7 +171,7 @@ def test_evaluation_harness_passes():
     require_contains(result, [
         "EVAL_PASS",
         "Scenarios checked: 3",
-        "Checks passed: 22/22",
+        "Checks passed: 25/25",
         "foundry readiness fallback",
     ])
 

@@ -8,6 +8,7 @@ from pathlib import Path
 from lab_rescue_agent.core.agent_trace import build_agent_trace
 from lab_rescue_agent.core.demo_report import build_report, load_scenario, project_root
 from lab_rescue_agent.core.html_dashboard import write_dashboard
+from lab_rescue_agent.core.manager_brief import write_manager_brief
 from lab_rescue_agent.integrations.foundry_status import foundry_status_text
 
 
@@ -48,7 +49,7 @@ def build_summary(scenario_id: str) -> dict:
     }
 
 
-def output_paths_for(scenario_id: str = DEFAULT_SCENARIO_ID, output_dir: str | Path | None = None) -> tuple[Path, Path, Path, Path]:
+def output_paths_for(scenario_id: str = DEFAULT_SCENARIO_ID, output_dir: str | Path | None = None) -> tuple[Path, Path, Path, Path, Path]:
     root = project_root()
     output_path = root / "demo" / "output" if output_dir is None else Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -58,11 +59,12 @@ def output_paths_for(scenario_id: str = DEFAULT_SCENARIO_ID, output_dir: str | P
     json_path = output_path / f"{base_name}_summary.json"
     html_path = output_path / f"{base_name}_dashboard.html"
     trace_path = output_path / f"{base_name}_trace.json"
-    return markdown_path, json_path, html_path, trace_path
+    manager_brief_path = output_path / f"{base_name}_manager_brief.md"
+    return markdown_path, json_path, html_path, trace_path, manager_brief_path
 
 
 def export_report(scenario_id: str = DEFAULT_SCENARIO_ID, output_dir: str | Path | None = None) -> tuple[Path, Path]:
-    markdown_path, json_path, html_path, trace_path = output_paths_for(scenario_id, output_dir)
+    markdown_path, json_path, html_path, trace_path, manager_brief_path = output_paths_for(scenario_id, output_dir)
 
     report = build_report(scenario_id)
     summary = build_summary(scenario_id)
@@ -71,5 +73,6 @@ def export_report(scenario_id: str = DEFAULT_SCENARIO_ID, output_dir: str | Path
     json_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     write_dashboard(html_path, report, summary, foundry_status_text())
     trace_path.write_text(json.dumps(build_agent_trace(scenario_id), indent=2) + "\n", encoding="utf-8")
+    write_manager_brief(manager_brief_path, scenario_id)
 
     return markdown_path, json_path
