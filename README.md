@@ -48,6 +48,11 @@ Expected result:
 DEMO_WORKFLOW_SMOKE_OK
 ```
 
+## Documentation
+
+- Architecture: docs/architecture.md
+- Demo prompts: demo/sample_prompts.md
+
 ## Hackathon alignment
 
 - Track focus: reasoning agents
