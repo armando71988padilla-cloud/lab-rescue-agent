@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from lab_rescue_agent.agents.lab_triage_agent import LabTriageAgent
+from lab_rescue_agent.agents.learning_path_agent import LearningPathAgent
 from lab_rescue_agent.agents.recovery_planner_agent import RecoveryPlannerAgent
 
 
@@ -43,6 +44,7 @@ def build_report(scenario_id):
     sources = load_sources(scenario["approved_sources"])
     triage = LabTriageAgent().run(scenario)
     recovery = RecoveryPlannerAgent().run(scenario, triage)
+    learning = LearningPathAgent().run(scenario, triage, recovery)
     lines = []
     lines.append("Lab Rescue Agent Demo Report")
     lines.append("=" * 29)
@@ -65,12 +67,19 @@ def build_report(scenario_id):
     append_list(lines, "Verification steps:", recovery.verification_steps)
     append_list(lines, "Safety notes:", recovery.safety_notes)
     append_list(lines, "Recovery citations:", recovery.citations)
+    lines.append("Agent 3: Learning Path Agent")
+    lines.append(f"- Certification: {learning.certification}")
+    lines.append(f"- Role: {learning.role}")
+    lines.append(f"- Readiness impact: {learning.readiness_impact}")
+    lines.append("")
+    append_list(lines, "Study focus:", learning.study_focus)
+    append_list(lines, "Recommended learner actions:", learning.recommended_actions)
+    append_list(lines, "Learning citations:", learning.citations)
     lines.append("Grounded sources loaded:")
     for name, text in sources.items():
         lines.append(f"- {name}: {len(text)} characters")
     lines.append("")
     lines.append("Next agent actions:")
-    lines.append("- Learning Path Agent maps the issue to certification skills")
     lines.append("- Assessment Agent generates grounded practice questions")
     lines.append("- Safety Verifier Agent checks for secrets, PII, and unsafe claims")
     return "\n".join(lines)
