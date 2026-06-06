@@ -44,3 +44,7 @@ jobs:
       - name: Run Foundry readiness status command
         run: |
           PYTHONPATH="$PWD/src" python -m lab_rescue_agent foundry-status
+
+      - name: Run evaluation harness
+        run: |
+          PYTHONPATH="$PWD/src" python -m lab_rescue_agent evaluate

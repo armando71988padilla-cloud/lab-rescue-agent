@@ -7,6 +7,7 @@ import sys
 from lab_rescue_agent import __version__
 from lab_rescue_agent.core.demo_report import build_report, load_scenarios
 from lab_rescue_agent.core.export_report import DEFAULT_SCENARIO_ID, export_report, output_paths_for
+from lab_rescue_agent.core.evaluate import evaluation_text
 from lab_rescue_agent.integrations.foundry_status import foundry_status_text
 
 
@@ -14,7 +15,7 @@ def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     if not args:
         print(f"Lab Rescue Agent v{__version__}")
-        print("Usage: python3 -m lab_rescue_agent scenarios|demo|export|foundry-status [scenario_id]")
+        print("Usage: python3 -m lab_rescue_agent scenarios|demo|export|evaluate|foundry-status [scenario_id]")
         return 0
 
     command = args[0]
@@ -42,12 +43,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"HTML dashboard: {html_path}")
         return 0
 
+    if command == "evaluate":
+        print(evaluation_text())
+        return 0
+
     if command == "foundry-status":
         print(foundry_status_text())
         return 0
 
     print(f"Unknown command: {command}")
-    print("Supported commands: scenarios, demo, export, foundry-status")
+    print("Supported commands: scenarios, demo, export, evaluate, foundry-status")
     return 2
 
 
