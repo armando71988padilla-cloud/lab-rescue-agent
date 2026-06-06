@@ -51,6 +51,14 @@ PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo
 PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 ```
 
+## Current export command
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
+```
+
+This generates `demo/output/az204-functions-storage-error_report.md` and `demo/output/az204-functions-storage-error_summary.json`.
+
 Expected output:
 
 ```text

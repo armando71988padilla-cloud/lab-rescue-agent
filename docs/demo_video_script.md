@@ -32,6 +32,12 @@ There is also a no-dependency smoke test:
 PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 ```
 
+The project can export a judge-friendly Markdown report and JSON summary:
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
+```
+
 Expected result:
 
 ```text
@@ -57,4 +63,5 @@ The final output shows a passing safety verifier, grounded citations, rollback s
 ```bash
 PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
 ```

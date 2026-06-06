@@ -44,6 +44,14 @@ PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo
 PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 ```
 
+## Export demo reports
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
+```
+
+This writes a Markdown report and JSON summary under `demo/output/`.
+
 Expected result:
 
 ```text
@@ -84,5 +92,5 @@ No real employee data, customer data, connection strings, secrets, or private lo
 - src/lab_rescue_agent/core: deterministic report orchestration
 - data/synthetic: synthetic lab failure scenarios and team learning signals
 - knowledge: approved synthetic grounding documents
-- demo: sample demo prompts and commands
+- demo: sample demo prompts, commands, and exported report outputs
 - tests: no-dependency smoke tests

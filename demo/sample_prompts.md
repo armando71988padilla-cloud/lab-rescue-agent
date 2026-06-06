@@ -16,6 +16,14 @@ Run the no-dependency regression check:
 PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 ```
 
+## Export command
+
+Generate judge-friendly Markdown and JSON report outputs:
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
+```
+
 ## Demo scenario
 
 Synthetic learner L-1001 is preparing for AZ-204 and fails an Azure Functions HTTP trigger lab.
