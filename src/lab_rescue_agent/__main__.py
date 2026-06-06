@@ -6,7 +6,7 @@ import sys
 
 from lab_rescue_agent import __version__
 from lab_rescue_agent.core.demo_report import build_report, load_scenarios
-from lab_rescue_agent.core.export_report import DEFAULT_SCENARIO_ID, export_report
+from lab_rescue_agent.core.export_report import DEFAULT_SCENARIO_ID, export_report, output_paths_for
 from lab_rescue_agent.integrations.foundry_status import foundry_status_text
 
 
@@ -35,9 +35,11 @@ def main(argv: list[str] | None = None) -> int:
     if command == "export":
         scenario_id = args[1] if len(args) > 1 else DEFAULT_SCENARIO_ID
         markdown_path, json_path = export_report(scenario_id)
+        _, _, html_path = output_paths_for(scenario_id)
         print("Export complete")
         print(f"Markdown report: {markdown_path}")
         print(f"JSON summary: {json_path}")
+        print(f"HTML dashboard: {html_path}")
         return 0
 
     if command == "foundry-status":

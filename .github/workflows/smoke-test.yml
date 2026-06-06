@@ -39,6 +39,7 @@ jobs:
           PYTHONPATH="$PWD/src" python -m lab_rescue_agent export
           test -f demo/output/az204-functions-storage-error_report.md
           test -f demo/output/az204-functions-storage-error_summary.json
+          test -f demo/output/az204-functions-storage-error_dashboard.html
 
       - name: Run Foundry readiness status command
         run: |

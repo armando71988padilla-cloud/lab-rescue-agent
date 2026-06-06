@@ -103,19 +103,29 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
     with TemporaryDirectory() as temp_dir:
         for scenario_id in EXPECTED_SCENARIO_IDS:
             markdown_path, json_path = export_report(scenario_id, output_dir=temp_dir)
+            html_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_dashboard.html"))
 
             if not markdown_path.exists():
                 raise AssertionError("Markdown export was not created for " + scenario_id)
             if not json_path.exists():
                 raise AssertionError("JSON export was not created for " + scenario_id)
+            if not html_path.exists():
+                raise AssertionError("HTML dashboard export was not created for " + scenario_id)
 
             markdown = markdown_path.read_text(encoding="utf-8")
+            dashboard = html_path.read_text(encoding="utf-8")
             summary = json.loads(json_path.read_text(encoding="utf-8"))
 
             require_contains(markdown, [
                 "Exported Lab Rescue Agent Report",
                 "Agent 7: Safety Verifier Agent",
                 "Seven-agent enterprise readiness demo completed with safety verification.",
+            ])
+            require_contains(dashboard, [
+                "Lab Rescue Agent Dashboard",
+                "Seven-agent certification lab recovery dashboard",
+                "Foundry Readiness",
+                scenario_id,
             ])
 
             if summary.get("scenario_id") != scenario_id:

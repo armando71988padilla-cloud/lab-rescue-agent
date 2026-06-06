@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lab Rescue Agent Dashboard - az400-pipeline-approval-blocked</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1020;
+      color: #eef2ff;
+    }
+    header {
+      padding: 32px;
+      background: linear-gradient(135deg, #1d4ed8, #7c3aed, #db2777);
+    }
+    main {
+      padding: 28px;
+      max-width: 1180px;
+      margin: auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .card {
+      background: #111827;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+    .pass {
+      color: #22c55e;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .chip {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      margin: 4px 4px 4px 0;
+      font-size: 13px;
+    }
+    pre {
+      white-space: pre-wrap;
+      background: #020617;
+      color: #dbeafe;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 18px;
+      overflow-x: auto;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    .muted {
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lab Rescue Agent</h1>
+    <p>Seven-agent certification lab recovery dashboard</p>
+  </header>
+  <main>
+    <section class="grid">
+      <div class="card">
+        <h2>Scenario</h2>
+        <p>az400-pipeline-approval-blocked</p>
+      </div>
+      <div class="card">
+        <h2>Certification</h2>
+        <p>AZ-400</p>
+      </div>
+      <div class="card">
+        <h2>Role</h2>
+        <p>DevOps Engineer</p>
+      </div>
+      <div class="card">
+        <h2>Safety Status</h2>
+        <p class="pass">PASS</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Agent Workflow</h2>
+      <ol>
+        <li>Lab Triage Agent</li>
+<li>Recovery Planner Agent</li>
+<li>Learning Path Agent</li>
+<li>Study Plan Agent</li>
+<li>Assessment Agent</li>
+<li>Manager Insights Agent</li>
+<li>Safety Verifier Agent</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Foundry Readiness</h2>
+      <pre>Microsoft Foundry readiness status
+- Runtime: local
+- Configuration: missing_required_configuration
+- Missing required: AZURE_AI_PROJECT_ENDPOINT, AZURE_AI_MODEL_DEPLOYMENT
+- Package azure.ai.projects: missing
+- Package azure.identity: missing
+- Package azure.ai.agents: missing
+- Azure CLI: missing
+- Readiness mode: local_fallback_active
+- Claim: Foundry-ready scaffold with deterministic local fallback; live Foundry deployment is not verified.</pre>
+    </section>
+
+    <section class="card">
+      <h2>Full Safety-Verified Report</h2>
+      <pre>Lab Rescue Agent Demo Report
+=============================
+Scenario: az400-pipeline-approval-blocked
+Certification: AZ-400
+Role: DevOps Engineer
+
+Agent 1: Lab Triage Agent
+- Confidence: high
+- Diagnosis: Failure pattern matches a configuration issue: Missing required environment approval for gated deployment
+
+Evidence reviewed:
+- Build completed successfully
+- Release pipeline created a deployment job
+- Deployment remained pending before production stage
+- Error: environment approval required before deployment can continue
+
+Mapped skill areas:
+- CI/CD release gates
+- Environment approvals
+- Deployment governance
+- Release verification
+
+Citations:
+- engineering_certification_guide.md
+- devops_pipeline_recovery.md
+
+Agent 2: Recovery Planner Agent
+- Summary: Recovery plan targets the confirmed lab failure: missing required environment approval for gated deployment
+
+Fix steps:
+- Confirm the pipeline and environment belong to the intended synthetic lab.
+- Inspect the environment approval and check configuration before editing the pipeline.
+- Add or request the required synthetic approver for the target environment.
+- Re-run or resume the deployment after approval is granted.
+
+Rollback steps:
+- Record the previous approval configuration before changing it.
+- Restore the previous gate configuration if the deployment behaves unexpectedly.
+- Cancel the pending synthetic deployment if approval settings remain incorrect.
+
+Verification steps:
+- Confirm the release waits at the approval gate.
+- Confirm approval allows the deployment to continue.
+- Confirm deployment logs show the gated stage completed successfully.
+
+Safety notes:
+- Use synthetic pipeline names only
+- Do not expose real environment names
+- Do not bypass real production approvals
+
+Recovery citations:
+- engineering_certification_guide.md
+- devops_pipeline_recovery.md
+
+Agent 3: Learning Path Agent
+- Certification: AZ-400
+- Role: DevOps Engineer
+- Readiness impact: This failure raises readiness risk until the learner can recover the lab and explain the configuration dependency.
+
+Study focus:
+- CI/CD release gates practice and recovery review
+- Environment approvals practice and recovery review
+- Deployment governance practice and recovery review
+- Release verification practice and recovery review
+
+Recommended learner actions:
+- Repeat the failed lab after applying the recovery plan.
+- Write a short explanation of root cause, fix, rollback, and verification.
+- Complete a focused practice check on Azure Functions configuration.
+- Review approved synthetic knowledge sources before the next lab attempt.
+
+Learning citations:
+- engineering_certification_guide.md
+- devops_pipeline_recovery.md
+
+Agent 4: Study Plan Agent
+- Summary: Create a capacity-aware AZ-400 recovery plan for DevOps Engineer using 6 focused hours per week.
+- Weekly study hours: 6
+- Preferred slot: Afternoon
+
+Capacity-aware schedule:
+- Afternoon focus block 1: reproduce the synthetic lab failure and collect evidence.
+- Afternoon focus block 2: apply the recovery plan and verify the HTTP trigger behavior.
+- Short review block: write root cause, fix, rollback, and verification notes.
+- Practice block: answer grounded questions tied to approved recovery and certification sources.
+
+Study milestones:
+- Recover the failed lab without introducing secrets into logs or source control.
+- Explain why the missing application setting blocked the runtime host.
+- Pass grounded practice checks at or above the readiness threshold.
+- Demonstrate rollback and verification steps clearly enough for manager review.
+
+Capacity notes:
+- Meeting load allows moderate study blocks without heavy schedule disruption.
+- Sufficient study capacity for recovery practice plus additional certification review.
+
+Study plan citations:
+- engineering_certification_guide.md
+- devops_pipeline_recovery.md
+- team_learning_signals.json
+
+Agent 5: Assessment Agent
+- Readiness target: AZ-400 grounded practice readiness
+- Scoring guidance: Pass when the learner explains root cause, fix, rollback, verification, and safety constraints.
+
+Grounded practice questions:
+- Q1: Why can a CI/CD pipeline build succeed while deployment remains blocked?
+  Expected: A required environment approval or gate can pause deployment even after the build succeeds.
+  Skill: Environment approvals
+  Citation: devops_pipeline_recovery.md
+- Q2: What should be recorded before changing deployment approval settings?
+  Expected: The previous approval or gate configuration should be recorded for rollback.
+  Skill: Rollback planning
+  Citation: devops_pipeline_recovery.md
+- Q3: What is the safest verification after an approval-gated deployment is repaired?
+  Expected: Confirm the pipeline waits for approval, resumes after approval, and completes the gated stage successfully.
+  Skill: Release verification
+  Citation: devops_pipeline_recovery.md
+
+Assessment citations:
+- engineering_certification_guide.md
+- devops_pipeline_recovery.md
+
+Agent 6: Manager Insights Agent
+- Team ID: TEAM-A
+- Summary: TEAM-A shows readiness risk around AZ-400 because this failed lab maps to: CI/CD release gates, Environment approvals, Deployment governance, Release verification.
+
+Readiness signals:
+- Synthetic team size reviewed: 3
+- Learners below 75 percent practice readiness: 2
+- Learners with failed or review lab outcomes: 2
+- Current learner study capacity: 6 hours per week
+- Assessment target: AZ-400 grounded practice readiness
+
+Risk areas:
+- Deployment governance readiness
+- Approval gate troubleshooting
+- Release verification discipline
+- Rollback planning for CI/CD configuration
+
+Recommended manager actions:
+- Protect short focus blocks for learners with high meeting load.
+- Assign a targeted recovery practice session for AZ-400.
+- Review whether learners can explain root cause, fix, rollback, and verification steps.
+- Use aggregate readiness signals only; do not expose private learner details in manager summaries.
+
+Privacy notes:
+- Uses synthetic learner and employee identifiers only.
+- Summarizes aggregate readiness signals instead of exposing sensitive personal data.
+- Does not use real employee records, customer data, credentials, or private logs.
+
+Manager citations:
+- engineering_certification_guide.md
+- devops_pipeline_recovery.md
+- team_learning_signals.json
+
+Grounded sources loaded:
+- engineering_certification_guide.md: 1406 characters
+- devops_pipeline_recovery.md: 1583 characters
+
+Agent 7: Safety Verifier Agent
+- Status: pass
+
+Checks passed:
+- Synthetic learner and team identifiers confirmed.
+- No secret-looking markers found in failure log.
+- Rollback steps are present.
+- Verification steps are present.
+- Capacity-aware study plan includes schedule and milestones.
+- Manager insights include aggregate readiness signals and privacy notes.
+- Grounded citations are present across agent outputs.
+- Every assessment question includes a citation.
+
+Warnings:
+- none
+
+Safety citations:
+- engineering_certification_guide.md
+- devops_pipeline_recovery.md
+- team_learning_signals.json
+
+Workflow status:
+- Seven-agent enterprise readiness demo completed with safety verification.</pre>
+    </section>
+
+    <p class="muted">Synthetic demo data only. No real employee data, customer data, credentials, connection strings, tokens, or private logs.</p>
+  </main>
+</body>
+</html>
