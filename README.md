@@ -51,6 +51,7 @@ DEMO_WORKFLOW_SMOKE_OK
 ## Documentation
 
 - Architecture: docs/architecture.md
+- Submission notes: docs/submission_notes.md
 - Demo prompts: demo/sample_prompts.md
 
 ## Hackathon alignment
