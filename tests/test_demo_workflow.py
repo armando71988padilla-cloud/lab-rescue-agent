@@ -7,6 +7,7 @@ from tempfile import TemporaryDirectory
 
 from lab_rescue_agent.core.demo_report import build_report, load_scenarios
 from lab_rescue_agent.core.export_report import export_report
+from lab_rescue_agent.integrations.foundry_status import foundry_status_text
 
 
 EXPECTED_SCENARIO_IDS = [
@@ -125,6 +126,15 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
                 raise AssertionError("Export summary does not contain seven workflow agents for " + scenario_id)
 
 
+def test_foundry_status_reports_local_fallback_when_unconfigured():
+    status = foundry_status_text({})
+    require_contains(status, [
+        "Microsoft Foundry readiness status",
+        "Readiness mode: local_fallback_active",
+        "live Foundry deployment is not verified",
+    ])
+
+
 def main():
     test_scenario_catalog_contains_expected_scenarios()
     test_all_scenarios_generate_seven_agent_reports()
@@ -132,6 +142,7 @@ def main():
     test_scenario_specific_outputs_are_grounded()
     test_default_demo_report_contains_grounded_citations()
     test_export_report_writes_markdown_and_json_outputs_for_all_scenarios()
+    test_foundry_status_reports_local_fallback_when_unconfigured()
     print("DEMO_WORKFLOW_SMOKE_OK")
 
 
