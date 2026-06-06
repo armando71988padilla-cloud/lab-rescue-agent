@@ -51,6 +51,7 @@ DEMO_WORKFLOW_SMOKE_OK
 ## Documentation
 
 - Architecture: docs/architecture.md
+- Microsoft integration plan: docs/microsoft_integration.md
 - Submission notes: docs/submission_notes.md
 - Demo prompts: demo/sample_prompts.md
 
