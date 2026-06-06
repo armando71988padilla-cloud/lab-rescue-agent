@@ -14,6 +14,8 @@ Lab Rescue Agent helps technical learners recover from failed certification labs
 - Added synthetic team learning signals.
 - Added export mode for Markdown and JSON report outputs.
 - Added generated demo report artifacts under demo/output/.
+- Added multi-scenario demo support for AZ-204, AZ-400, and AZ-104 recovery cases.
+- Added scenario list CLI command.
 - Added GitHub Actions smoke test workflow.
 - Added README CI badge.
 
@@ -29,7 +31,9 @@ Lab Rescue Agent helps technical learners recover from failed certification labs
 
 ## Demo command
 
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent scenarios
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo az400-pipeline-approval-blocked
 
 ## Export command
 

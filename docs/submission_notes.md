@@ -57,7 +57,7 @@ PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
 ```
 
-This generates `demo/output/az204-functions-storage-error_report.md` and `demo/output/az204-functions-storage-error_summary.json`.
+This generates scenario-specific Markdown and JSON outputs under `demo/output/`.
 
 Expected output:
 
@@ -67,4 +67,4 @@ DEMO_WORKFLOW_SMOKE_OK
 
 ## Current limitation
 
-The current version is deterministic and local-first. The next build step is connecting the same workflow to Microsoft Agent Framework or Azure AI Foundry while preserving the local fallback.
+The current version is deterministic and local-first with three synthetic certification recovery scenarios: AZ-204 Azure Functions storage configuration, AZ-400 environment approval, and AZ-104 VM NSG connectivity. The next build step is connecting the same workflow to Microsoft Agent Framework or Azure AI Foundry while preserving the local fallback.

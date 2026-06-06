@@ -8,7 +8,7 @@ The problem is simple: learners often fail hands-on certification labs and do no
 
 This project turns a failed lab into a structured recovery and readiness workflow.
 
-The demo uses a synthetic AZ-204 Azure Functions lab failure. The learner deploys an HTTP trigger, but the Function App host cannot start because AzureWebJobsStorage is missing or empty.
+The demo includes three synthetic certification lab failures: an AZ-204 Azure Functions storage setting failure, an AZ-400 pipeline approval gate failure, and an AZ-104 VM NSG connectivity failure. The default video path can still focus on the AZ-204 case, then show the scenario list to prove the system generalizes.
 
 The upgraded workflow runs through seven agents:
 
@@ -62,6 +62,8 @@ The final output shows a passing safety verifier, grounded citations, rollback s
 
 ```bash
 PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent scenarios
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo az400-pipeline-approval-blocked
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
 ```

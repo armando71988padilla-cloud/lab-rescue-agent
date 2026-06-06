@@ -32,12 +32,24 @@ From failed lab to certification readiness in one safe, explainable multi-agent 
 
 Synthetic learner L-1001 is preparing for AZ-204 and fails an Azure Functions HTTP trigger lab.
 
-The failure evidence indicates that AzureWebJobsStorage is missing or empty, causing the Function App host to fail initialization.
+The default scenario uses an AZ-204 Azure Functions failure where AzureWebJobsStorage is missing or empty. The project now also includes AZ-400 pipeline approval and AZ-104 VM NSG connectivity recovery scenarios.
 
-## Run the demo
+## List demo scenarios
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent scenarios
+```
+
+## Run the default demo
 
 ```bash
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo
+```
+
+## Run a specific scenario
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo az400-pipeline-approval-blocked
 ```
 
 ## Run the smoke test
@@ -52,7 +64,7 @@ PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
 ```
 
-This writes a Markdown report and JSON summary under `demo/output/`.
+This writes Markdown reports and JSON summaries under `demo/output/`. Exports are scenario-specific when a scenario ID is provided.
 
 Expected result:
 
@@ -92,7 +104,7 @@ No real employee data, customer data, connection strings, secrets, or private lo
 
 - src/lab_rescue_agent/agents: specialized agent modules
 - src/lab_rescue_agent/core: deterministic report orchestration
-- data/synthetic: synthetic lab failure scenarios and team learning signals
+- data/synthetic: synthetic lab failure scenarios, multi-scenario catalog, and team learning signals
 - knowledge: approved synthetic grounding documents
 - demo: sample demo prompts, commands, and exported report outputs
 - tests: no-dependency smoke tests

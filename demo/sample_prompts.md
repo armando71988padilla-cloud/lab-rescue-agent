@@ -1,11 +1,27 @@
 # Lab Rescue Agent Demo Prompts
 
+## Scenario list command
+
+Show available synthetic scenarios:
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent scenarios
+```
+
 ## Primary demo command
 
 Run the deterministic local demo:
 
 ```bash
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo
+```
+
+## Specific scenario demo commands
+
+```bash
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo az204-functions-storage-error
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo az400-pipeline-approval-blocked
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent demo az104-vm-nsg-connectivity
 ```
 
 ## Smoke test command
@@ -22,6 +38,8 @@ Generate judge-friendly Markdown and JSON report outputs:
 
 ```bash
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export az400-pipeline-approval-blocked
+PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export az104-vm-nsg-connectivity
 ```
 
 ## Demo scenario
