@@ -1,0 +1,180 @@
+{
+  "project": "Lab Rescue Agent",
+  "scenario_id": "az400-pipeline-approval-blocked",
+  "certification": "AZ-400",
+  "role": "DevOps Engineer",
+  "trace_type": "agent_reasoning_ledger",
+  "workflow_count": 7,
+  "workflow": [
+    {
+      "agent": "Lab Triage Agent",
+      "input_refs": [
+        "scenario.failure_log",
+        "scenario.expected_outcome",
+        "scenario.observed_outcome"
+      ],
+      "decision": "Diagnose the failure pattern and map it to certification skill areas.",
+      "outputs": [
+        "diagnosis",
+        "confidence",
+        "evidence",
+        "skill_areas",
+        "citations"
+      ],
+      "citations": [
+        "engineering_certification_guide.md",
+        "devops_pipeline_recovery.md"
+      ],
+      "safety_gates": [
+        "synthetic_scenario_only",
+        "grounded_citations_required"
+      ]
+    },
+    {
+      "agent": "Recovery Planner Agent",
+      "input_refs": [
+        "triage_result",
+        "scenario.known_root_cause",
+        "scenario.fix_steps"
+      ],
+      "decision": "Create safe repair steps for the confirmed failure pattern.",
+      "outputs": [
+        "summary",
+        "fix_steps",
+        "rollback_steps",
+        "verification_steps",
+        "safety_notes"
+      ],
+      "citations": [
+        "engineering_certification_guide.md",
+        "devops_pipeline_recovery.md"
+      ],
+      "safety_gates": [
+        "rollback_required",
+        "verification_required",
+        "secret_hygiene_required"
+      ]
+    },
+    {
+      "agent": "Learning Path Agent",
+      "input_refs": [
+        "triage_result.skill_areas",
+        "recovery_plan"
+      ],
+      "decision": "Convert the lab failure into certification readiness gaps and learner actions.",
+      "outputs": [
+        "readiness_impact",
+        "study_focus",
+        "recommended_actions"
+      ],
+      "citations": [
+        "engineering_certification_guide.md",
+        "devops_pipeline_recovery.md"
+      ],
+      "safety_gates": [
+        "certification_mapping_required",
+        "synthetic_learner_only"
+      ]
+    },
+    {
+      "agent": "Study Plan Agent",
+      "input_refs": [
+        "learning_path",
+        "team_learning_signals.json"
+      ],
+      "decision": "Create a capacity-aware recovery schedule using synthetic learner constraints.",
+      "outputs": [
+        "weekly_study_hours",
+        "capacity_aware_schedule",
+        "milestones"
+      ],
+      "citations": [
+        "engineering_certification_guide.md",
+        "devops_pipeline_recovery.md",
+        "team_learning_signals.json"
+      ],
+      "safety_gates": [
+        "capacity_constraints_respected",
+        "synthetic_team_signals_only"
+      ]
+    },
+    {
+      "agent": "Assessment Agent",
+      "input_refs": [
+        "learning_path",
+        "scenario.assessment_questions"
+      ],
+      "decision": "Generate grounded practice questions that validate recovery understanding.",
+      "outputs": [
+        "questions",
+        "expected_answers",
+        "skill_areas",
+        "citations"
+      ],
+      "citations": [
+        "engineering_certification_guide.md",
+        "devops_pipeline_recovery.md"
+      ],
+      "safety_gates": [
+        "every_question_requires_citation",
+        "answers_grounded_in_sources"
+      ]
+    },
+    {
+      "agent": "Manager Insights Agent",
+      "input_refs": [
+        "triage_result",
+        "learning_path",
+        "study_plan",
+        "assessment_result",
+        "team_learning_signals.json"
+      ],
+      "decision": "Summarize aggregate team readiness signals without exposing sensitive personal data.",
+      "outputs": [
+        "summary",
+        "readiness_signals",
+        "risk_areas",
+        "recommended_manager_actions",
+        "privacy_notes"
+      ],
+      "citations": [
+        "engineering_certification_guide.md",
+        "devops_pipeline_recovery.md",
+        "team_learning_signals.json"
+      ],
+      "safety_gates": [
+        "aggregate_only",
+        "privacy_notes_required",
+        "no_real_employee_data"
+      ]
+    },
+    {
+      "agent": "Safety Verifier Agent",
+      "input_refs": [
+        "triage_result",
+        "recovery_plan",
+        "learning_path",
+        "assessment_result",
+        "manager_insights"
+      ],
+      "decision": "Trust the final report only if citations, rollback, verification, synthetic data posture, and secret hygiene pass.",
+      "outputs": [
+        "status",
+        "checks_passed",
+        "warnings",
+        "citations"
+      ],
+      "citations": [
+        "engineering_certification_guide.md",
+        "devops_pipeline_recovery.md",
+        "team_learning_signals.json"
+      ],
+      "safety_gates": [
+        "status_must_pass",
+        "warnings_must_be_none",
+        "secret_markers_block_report"
+      ]
+    }
+  ],
+  "data_policy": "Synthetic demo data only. No real employee data, customer data, credentials, connection strings, tokens, or private logs."
+}

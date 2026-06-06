@@ -105,6 +105,7 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
         for scenario_id in EXPECTED_SCENARIO_IDS:
             markdown_path, json_path = export_report(scenario_id, output_dir=temp_dir)
             html_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_dashboard.html"))
+            trace_path = markdown_path.with_name(markdown_path.name.replace("_report.md", "_trace.json"))
 
             if not markdown_path.exists():
                 raise AssertionError("Markdown export was not created for " + scenario_id)
@@ -112,9 +113,12 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
                 raise AssertionError("JSON export was not created for " + scenario_id)
             if not html_path.exists():
                 raise AssertionError("HTML dashboard export was not created for " + scenario_id)
+            if not trace_path.exists():
+                raise AssertionError("Agent trace export was not created for " + scenario_id)
 
             markdown = markdown_path.read_text(encoding="utf-8")
             dashboard = html_path.read_text(encoding="utf-8")
+            trace = json.loads(trace_path.read_text(encoding="utf-8"))
             summary = json.loads(json_path.read_text(encoding="utf-8"))
 
             require_contains(markdown, [
@@ -128,6 +132,11 @@ def test_export_report_writes_markdown_and_json_outputs_for_all_scenarios():
                 "Foundry Readiness",
                 scenario_id,
             ])
+
+            if trace.get("trace_type") != "agent_reasoning_ledger":
+                raise AssertionError("Trace type mismatch for " + scenario_id)
+            if trace.get("workflow_count") != 7:
+                raise AssertionError("Trace workflow_count mismatch for " + scenario_id)
 
             if summary.get("scenario_id") != scenario_id:
                 raise AssertionError("Export summary scenario_id mismatch for " + scenario_id)
@@ -151,7 +160,7 @@ def test_evaluation_harness_passes():
     require_contains(result, [
         "EVAL_PASS",
         "Scenarios checked: 3",
-        "Checks passed: 19/19",
+        "Checks passed: 22/22",
         "foundry readiness fallback",
     ])
 

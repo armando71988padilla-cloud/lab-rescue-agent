@@ -40,6 +40,7 @@ jobs:
           test -f demo/output/az204-functions-storage-error_report.md
           test -f demo/output/az204-functions-storage-error_summary.json
           test -f demo/output/az204-functions-storage-error_dashboard.html
+          test -f demo/output/az204-functions-storage-error_trace.json
 
       - name: Run Foundry readiness status command
         run: |
