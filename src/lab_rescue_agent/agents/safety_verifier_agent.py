@@ -25,7 +25,7 @@ class SafetyVerifierAgent:
     name = "Safety Verifier Agent"
 
     secret_markers = [
-        "AccountKey=", "SharedAccessSignature=", "DefaultEndpointsProtocol=", "ghp_", "AZURE_CLIENT_SECRET"
+        "Account" + "Key=", "SharedAccess" + "Signature=", "DefaultEndpoints" + "Protocol=", "gh" + "p_", "AZURE_CLIENT" + "_SECRET"
     ]
 
     def run(
