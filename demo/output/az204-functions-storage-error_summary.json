@@ -1,0 +1,20 @@
+{
+  "project": "Lab Rescue Agent",
+  "scenario_id": "az204-functions-storage-error",
+  "certification": "AZ-204",
+  "role": "Cloud Developer",
+  "team_id": "TEAM-A",
+  "learner_id": "L-1001",
+  "workflow": [
+    "Lab Triage Agent",
+    "Recovery Planner Agent",
+    "Learning Path Agent",
+    "Study Plan Agent",
+    "Assessment Agent",
+    "Manager Insights Agent",
+    "Safety Verifier Agent"
+  ],
+  "safety_status": "pass",
+  "data_policy": "Synthetic demo data only. No real employee data, customer data, secrets, or private logs.",
+  "expected_smoke_test": "DEMO_WORKFLOW_SMOKE_OK"
+}
