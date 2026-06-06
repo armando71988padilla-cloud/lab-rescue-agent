@@ -7,7 +7,9 @@ from dataclasses import dataclass
 from lab_rescue_agent.agents.assessment_agent import AssessmentResult
 from lab_rescue_agent.agents.lab_triage_agent import LabTriageResult
 from lab_rescue_agent.agents.learning_path_agent import LearningPathResult
+from lab_rescue_agent.agents.manager_insights_agent import ManagerInsightsResult
 from lab_rescue_agent.agents.recovery_planner_agent import RecoveryPlanResult
+from lab_rescue_agent.agents.study_plan_agent import StudyPlanResult
 
 
 @dataclass(frozen=True)
@@ -25,7 +27,11 @@ class SafetyVerifierAgent:
     name = "Safety Verifier Agent"
 
     secret_markers = [
-        "Account" + "Key=", "SharedAccess" + "Signature=", "DefaultEndpoints" + "Protocol=", "gh" + "p_", "AZURE_CLIENT" + "_SECRET"
+        "Account" + "Key=",
+        "SharedAccess" + "Signature=",
+        "DefaultEndpoints" + "Protocol=",
+        "gh" + "p_",
+        "AZURE_CLIENT" + "_SECRET",
     ]
 
     def run(
@@ -34,7 +40,9 @@ class SafetyVerifierAgent:
         triage: LabTriageResult,
         recovery: RecoveryPlanResult,
         learning: LearningPathResult,
+        study_plan: StudyPlanResult,
         assessment: AssessmentResult,
+        manager: ManagerInsightsResult,
     ) -> SafetyVerificationResult:
         checks_passed = []
         warnings = []
@@ -63,7 +71,17 @@ class SafetyVerifierAgent:
         else:
             warnings.append("Recovery plan is missing verification steps.")
 
-        if triage.citations and learning.citations and assessment.citations:
+        if study_plan.schedule and study_plan.milestones:
+            checks_passed.append("Capacity-aware study plan includes schedule and milestones.")
+        else:
+            warnings.append("Study plan is missing schedule or milestone guidance.")
+
+        if manager.readiness_signals and manager.privacy_notes:
+            checks_passed.append("Manager insights include aggregate readiness signals and privacy notes.")
+        else:
+            warnings.append("Manager insights are missing readiness signals or privacy notes.")
+
+        if triage.citations and learning.citations and study_plan.citations and assessment.citations and manager.citations:
             checks_passed.append("Grounded citations are present across agent outputs.")
         else:
             warnings.append("One or more agent outputs are missing citations.")
@@ -75,7 +93,14 @@ class SafetyVerifierAgent:
             checks_passed.append("Every assessment question includes a citation.")
 
         citations = []
-        for citation in triage.citations + recovery.citations + learning.citations + assessment.citations:
+        for citation in (
+            triage.citations
+            + recovery.citations
+            + learning.citations
+            + study_plan.citations
+            + assessment.citations
+            + manager.citations
+        ):
             if citation not in citations:
                 citations.append(citation)
 

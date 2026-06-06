@@ -15,12 +15,28 @@ def test_demo_report_contains_required_agent_sections():
         "Agent 1: Lab Triage Agent",
         "Agent 2: Recovery Planner Agent",
         "Agent 3: Learning Path Agent",
-        "Agent 4: Assessment Agent",
-        "Agent 5: Safety Verifier Agent",
+        "Agent 4: Study Plan Agent",
+        "Agent 5: Assessment Agent",
+        "Agent 6: Manager Insights Agent",
+        "Agent 7: Safety Verifier Agent",
         "Status: pass",
         "Warnings:",
         "- none",
         "Workflow status:",
+        "Seven-agent enterprise readiness demo completed with safety verification.",
+    ])
+
+
+def test_demo_report_contains_enterprise_readiness_outputs():
+    report = build_report("az204-functions-storage-error")
+    require_contains(report, [
+        "Capacity-aware schedule:",
+        "Study milestones:",
+        "Manager Insights Agent",
+        "Readiness signals:",
+        "Recommended manager actions:",
+        "Privacy notes:",
+        "Synthetic team size reviewed: 3",
     ])
 
 
@@ -29,6 +45,7 @@ def test_demo_report_contains_grounded_citations():
     require_contains(report, [
         "engineering_certification_guide.md",
         "azure_functions_lab_recovery.md",
+        "team_learning_signals.json",
         "Citation: azure_functions_lab_recovery.md",
         "Citation: engineering_certification_guide.md",
     ])
@@ -36,6 +53,7 @@ def test_demo_report_contains_grounded_citations():
 
 def main():
     test_demo_report_contains_required_agent_sections()
+    test_demo_report_contains_enterprise_readiness_outputs()
     test_demo_report_contains_grounded_citations()
     print("DEMO_WORKFLOW_SMOKE_OK")
 

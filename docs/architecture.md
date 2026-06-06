@@ -23,7 +23,13 @@ Recovery Planner Agent
 Learning Path Agent
         |
         v
+Study Plan Agent
+        |
+        v
 Assessment Agent
+        |
+        v
+Manager Insights Agent
         |
         v
 Safety Verifier Agent
@@ -39,7 +45,9 @@ Final trusted demo report
 | Lab Triage Agent | Diagnoses the failure pattern from synthetic lab evidence | diagnosis, confidence, evidence, citations |
 | Recovery Planner Agent | Creates safe repair steps | fix steps, rollback steps, verification steps, safety notes |
 | Learning Path Agent | Maps the lab failure to certification readiness | study focus, learner actions, readiness impact |
+| Study Plan Agent | Creates capacity-aware recovery planning | schedule, milestones, capacity notes, citations |
 | Assessment Agent | Creates grounded practice questions | questions, expected answers, skill areas, citations |
+| Manager Insights Agent | Summarizes aggregate team readiness signals | readiness signals, risk areas, manager actions, privacy notes |
 | Safety Verifier Agent | Checks output reliability and data hygiene | pass/review status, checks passed, warnings, citations |
 
 ## Grounding model
@@ -61,10 +69,12 @@ This models a Foundry IQ-style retrieval pattern where agents cite approved know
 - Recovery plans must include rollback steps
 - Recovery plans must include verification steps
 - Assessment questions must include citations
+- Manager insights must use aggregate synthetic signals and include privacy notes
+- Study plans must include schedule and milestone guidance
 
 ## Current runtime
 
-The current implementation is deterministic Python so the demo can run reliably without cloud quota or network dependencies.
+The current implementation is deterministic Python with a seven-agent enterprise readiness workflow so the demo can run reliably without cloud quota or network dependencies.
 
 ## Planned Microsoft integration
 

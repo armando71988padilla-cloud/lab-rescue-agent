@@ -1,0 +1,55 @@
+{
+  "team_id": "TEAM-A",
+  "team_name": "Synthetic Cloud Enablement Team",
+  "data_policy": "Synthetic demo data only. No real employee data or PII.",
+  "learners": [
+    {
+      "learner_id": "L-1001",
+      "employee_id": "EMP-1001",
+      "role": "Cloud Developer",
+      "certification": "AZ-204",
+      "meeting_hours_per_week": 22,
+      "focus_hours_per_week": 10,
+      "available_study_hours_per_week": 4,
+      "preferred_learning_slot": "Morning",
+      "practice_score_avg": 67,
+      "recent_lab_outcome": "Fail",
+      "risk_factors": [
+        "High meeting load",
+        "Recent Azure Functions lab failure",
+        "Needs configuration recovery practice"
+      ]
+    },
+    {
+      "learner_id": "L-1002",
+      "employee_id": "EMP-1002",
+      "role": "DevOps Engineer",
+      "certification": "AZ-400",
+      "meeting_hours_per_week": 15,
+      "focus_hours_per_week": 18,
+      "available_study_hours_per_week": 6,
+      "preferred_learning_slot": "Afternoon",
+      "practice_score_avg": 82,
+      "recent_lab_outcome": "Pass",
+      "risk_factors": [
+        "Moderate release workload"
+      ]
+    },
+    {
+      "learner_id": "L-1003",
+      "employee_id": "EMP-1003",
+      "role": "Cloud Engineer",
+      "certification": "AZ-104",
+      "meeting_hours_per_week": 18,
+      "focus_hours_per_week": 14,
+      "available_study_hours_per_week": 5,
+      "preferred_learning_slot": "Morning",
+      "practice_score_avg": 74,
+      "recent_lab_outcome": "Review",
+      "risk_factors": [
+        "Borderline readiness",
+        "Needs verification practice"
+      ]
+    }
+  ]
+}
