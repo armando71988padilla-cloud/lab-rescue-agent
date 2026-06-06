@@ -17,6 +17,9 @@ From failed lab to certification readiness in one safe, explainable multi-agent 
 - Synthetic data only
 - Grounded synthetic knowledge docs are cited in outputs
 - Stdlib smoke test passes without extra test dependencies
+- Evaluation harness validates 25 quality checks across all scenarios
+- Static HTML dashboards, agent trace ledgers, and manager executive briefs export for each scenario
+- Optional Microsoft Foundry live-probe guide is documented without requiring cloud access for judging
 
 ## Agent workflow
 
@@ -64,7 +67,7 @@ PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py
 PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export
 ```
 
-This writes Markdown reports and JSON summaries under `demo/output/`. Exports are scenario-specific when a scenario ID is provided.
+This writes scenario-specific Markdown reports, JSON summaries, static HTML dashboards, agent trace ledgers, and manager executive briefs under `demo/output/`.
 
 Expected result:
 
