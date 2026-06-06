@@ -77,6 +77,7 @@ DEMO_WORKFLOW_SMOKE_OK
 - Architecture: docs/architecture.md
 - Microsoft integration plan: docs/microsoft_integration.md
 - Microsoft Foundry readiness: docs/foundry_readiness.md
+- Microsoft Foundry live probe guide: docs/foundry_live_probe.md
 - Submission notes: docs/submission_notes.md
 - Demo video script: docs/demo_video_script.md
 - Demo prompts: demo/sample_prompts.md

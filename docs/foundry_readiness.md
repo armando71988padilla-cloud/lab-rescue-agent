@@ -35,3 +35,7 @@ The local fallback does not require Azure SDK packages. A future live probe shou
 ## Safety rule
 
 Do not place secrets, connection strings, tokens, or private tenant data in this repository.
+
+## Live probe guide
+
+See `docs/foundry_live_probe.md` for the optional live validation path.
