@@ -10,6 +10,16 @@ It helps a technical learner recover from a failed hands-on certification lab, m
 
 From failed lab to certification readiness in one safe, explainable multi-agent workflow.
 
+## Judge quick path
+
+1. Watch the demo video.
+2. Run the smoke test: `PYTHONPATH="$PWD/src" python3 tests/test_demo_workflow.py`.
+3. Run the quality gate: `PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent evaluate`.
+4. Export a scenario: `PYTHONPATH="$PWD/src" python3 -m lab_rescue_agent export az204-functions-storage-error`.
+5. Open the static HTML dashboard under `demo/output/`.
+6. Inspect the agent trace ledger JSON and manager executive brief.
+7. Review `docs/foundry_readiness.md` and `docs/foundry_live_probe.md` for the Microsoft Foundry path.
+
 ## Current demo status
 
 - Local deterministic Python demo works

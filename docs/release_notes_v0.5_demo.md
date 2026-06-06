@@ -11,7 +11,7 @@ This release upgrades Lab Rescue Agent into a maximum-polish hackathon demo with
 - Added manager executive brief exports for each scenario.
 - Added evaluation harness with 25 quality checks across all scenarios.
 - Added optional Microsoft Foundry live-probe guide and requirements file.
-- Polished README to surface all judge-facing demo artifacts.
+- Polished README to surface all judge-facing demo artifacts.\n- Added Judge Quick Path section for fast review.\n- Added one-command recording walkthrough script for final demo capture.
 
 ## Core workflow
 
