@@ -1,0 +1,35 @@
+[
+  {
+    "scenario_id": "az204-functions-storage-error",
+    "title": "Azure Functions lab deployment fails because storage setting is missing",
+    "certification": "AZ-204",
+    "role": "Cloud Developer",
+    "learner_id": "L-1001",
+    "team_id": "TEAM-A",
+    "lab_name": "HTTP trigger function deployment lab",
+    "failure_log": [
+      "Deployment completed with warnings",
+      "Function host started but HTTP trigger did not become available",
+      "Error: AzureWebJobsStorage is missing or empty",
+      "Host initialization failed because storage connection could not be resolved"
+    ],
+    "expected_outcome": "HTTP trigger responds successfully after deployment",
+    "observed_outcome": "Function app deploys but runtime host cannot start the trigger",
+    "known_root_cause": "Missing AzureWebJobsStorage application setting",
+    "skill_areas": [
+      "Azure Functions",
+      "Application settings",
+      "Storage account configuration",
+      "Deployment verification"
+    ],
+    "approved_sources": [
+      "engineering_certification_guide.md",
+      "azure_functions_lab_recovery.md"
+    ],
+    "safety_notes": [
+      "Use synthetic lab data only",
+      "Do not expose real connection strings",
+      "Use placeholder-free environment examples in documentation"
+    ]
+  }
+]
