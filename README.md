@@ -1,5 +1,7 @@
 # Lab Rescue Agent
 
+[![Smoke Test](https://github.com/armando71988padilla-cloud/lab-rescue-agent/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/armando71988padilla-cloud/lab-rescue-agent/actions/workflows/smoke-test.yml)
+
 Lab Rescue Agent is a multi-agent certification lab recovery system for Microsoft AI Agents League.
 
 It helps a technical learner recover from a failed hands-on certification lab, maps the failure to certification readiness, generates grounded practice questions, and verifies the final output for safety and reliability.
